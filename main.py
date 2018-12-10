@@ -104,7 +104,7 @@ def decisionTree(data, target):
 
 
 def randomForest(data, target):
-    for e in range(2, 10):
+    for e in range(2, 11):
         rf = RandomForestClassifier(n_estimators=e)
         test(rf, 'rf', data, target, e)
     return
