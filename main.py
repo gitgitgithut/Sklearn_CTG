@@ -8,6 +8,7 @@ from sklearn.model_selection import cross_val_predict
 from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier
 from sklearn.preprocessing import label_binarize
 from sklearn.multiclass import OneVsRestClassifier
+from sklearn.neural_network import MLPClassifier
 from itertools import cycle
 from scipy import interp
 from os import makedirs, path
@@ -116,6 +117,15 @@ def adaBoost(data, target):
         test(ada, 'ada', data, target, e)
     return
 
+
+def mlp(data, target):
+    lst = [(MLPClassifier(solver='lbfgs', alpha=0.2, activation='identity'), 'mlp,0.2, identity'),
+           (MLPClassifier(solver='lbfgs', alpha=0.2, activation='logistic'), 'mlp, 0,2, logistic'),
+           (MLPClassifier(solver='lbfgs', alpha=0.2, activation='tanh'), 'mlp, 0.2, tanh'),
+           (MLPClassifier(solver='lbfgs', alpha=0.2, activation='relu'), 'mlp, 0.2, relu')]
+    for ann in lst:
+        threading.Thread(target=test, args=(ann[0], ann[1], data, target)).start()
+    return
 ####################################################################################
 def main():
     dataset = np.genfromtxt('CTG.csv', delimiter=',')
@@ -123,14 +133,11 @@ def main():
     target = dataset[2:, -1]
     data = dataset[2:, 10:31]
     # data = dimred(dataset[2:size[0]-1, 10:31], target)
-    t_r = threading.Thread(target=regression, args=(data, target))
-    t_r.start()
-    t_dt = threading.Thread(target=decisionTree, args=(data, target))
-    t_dt.start()
-    t_rf = threading.Thread(target=randomForest, args=(data, target))
-    t_rf.start()
-    t_ada = threading.Thread(target=adaBoost, args=(data, target))
-    t_ada.start()
+    # threading.Thread(target=regression, args=(data, target)).start()
+    # threading.Thread(target=decisionTree, args=(data, target)).start()
+    # threading.Thread(target=randomForest, args=(data, target)).start()
+    # threading.Thread(target=adaBoost, args=(data, target)).start()
+    threading.Thread(target=mlp, args=(data, target)).start()
     return
 
 ####################################################################################
