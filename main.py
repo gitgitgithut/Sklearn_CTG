@@ -33,7 +33,7 @@ def test(clf, name, data, target, e = 0):
     target = label_binarize(target, classes=[1, 2, 3])
     n_classes = target.shape[1]
     clf = OneVsRestClassifier(clf)
-    with open(fname, 'w') as file:
+    with open(name + '/' + fname, 'w') as file:
         writer = csv.writer(file, delimiter=',')
         writer.writerow(["K", 'Precision', 'Recall'])
         for k in [2, 5, 10, 100, 500, 1000, 2126]:
