@@ -119,10 +119,16 @@ def adaBoost(data, target):
 
 
 def mlp(data, target):
-    lst = [(MLPClassifier(solver='lbfgs', alpha=0.2, activation='identity'), 'mlp,0.2, identity'),
-           (MLPClassifier(solver='lbfgs', alpha=0.2, activation='logistic'), 'mlp, 0,2, logistic'),
-           (MLPClassifier(solver='lbfgs', alpha=0.2, activation='tanh'), 'mlp, 0.2, tanh'),
-           (MLPClassifier(solver='lbfgs', alpha=0.2, activation='relu'), 'mlp, 0.2, relu')]
+    # lst = [(MLPClassifier(solver='lbfgs', alpha=0.2, activation='identity'), 'mlp,0.2, identity'),
+    #        (MLPClassifier(solver='lbfgs', alpha=0.2, activation='logistic'), 'mlp, 0,2, logistic'),
+    #        (MLPClassifier(solver='lbfgs', alpha=0.2, activation='tanh'), 'mlp, 0.2, tanh'),
+    #        (MLPClassifier(solver='lbfgs', alpha=0.2, activation='relu'), 'mlp, 0.2, relu')]
+    lst = [(MLPClassifier(solver='lbfgs', alpha=0.0001, activation='logistic'), 'mlp,0.0001, logistic'),
+           (MLPClassifier(solver='lbfgs', alpha=0.001, activation='logistic'), 'mlp, 0,001, logistic'),
+           (MLPClassifier(solver='lbfgs', alpha=0.01, activation='logistic'), 'mlp, 0.01, logistic'),
+           (MLPClassifier(solver='lbfgs', alpha=0.0001, activation='tanh'), 'mlp,0.0001, tanh'),
+           (MLPClassifier(solver='lbfgs', alpha=0.001, activation='tanh'), 'mlp, 0,001, tanh'),
+           (MLPClassifier(solver='lbfgs', alpha=0.01, activation='tanh'), 'mlp, 0.01, tanh')]
     for ann in lst:
         threading.Thread(target=test, args=(ann[0], ann[1], data, target)).start()
     return
