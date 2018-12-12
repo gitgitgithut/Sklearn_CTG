@@ -93,8 +93,16 @@ def test(clf, name, data, target, e = 0):
 
 
 def regression(data, target):
-    logreg = LogisticRegression(multi_class='multinomial', solver='saga')
-    test(logreg, "logreg", data, target, 0)
+    lst = [(LogisticRegression(multi_class='multinomial', solver='saga', penalty='l1', C=1), ' with l1 strength 1'),
+           (LogisticRegression(multi_class='multinomial', solver='saga', penalty='l1', C=3), ' with l1 strength 3'),
+           (LogisticRegression(multi_class='multinomial', solver='saga', penalty='l1', C=9), ' with l1 strength 9'),
+           (LogisticRegression(multi_class='multinomial', solver='saga', penalty='l1', C=27), ' with l1 strength 27'),
+           (LogisticRegression(multi_class='multinomial', solver='saga', penalty='l2', C=1), ' with l2 strength 1'),
+           (LogisticRegression(multi_class='multinomial', solver='saga', penalty='l2', C=3), ' with l2 strength 3'),
+           (LogisticRegression(multi_class='multinomial', solver='saga', penalty='l2', C=9), ' with l2 strength 9'),
+           (LogisticRegression(multi_class='multinomial', solver='saga', penalty='l2', C=27), ' with l2 strength 27')]
+    for logreg in lst:
+        threading.Thread(target=test, args=(logreg[0], "logreg" + logreg[1], data, target, 0)).start()
     return
 
 
@@ -139,11 +147,11 @@ def main():
     target = dataset[2:, -1]
     data = dataset[2:, 10:31]
     # data = dimred(dataset[2:size[0]-1, 10:31], target)
-    # threading.Thread(target=regression, args=(data, target)).start()
+    threading.Thread(target=regression, args=(data, target)).start()
     # threading.Thread(target=decisionTree, args=(data, target)).start()
     # threading.Thread(target=randomForest, args=(data, target)).start()
     # threading.Thread(target=adaBoost, args=(data, target)).start()
-    threading.Thread(target=mlp, args=(data, target)).start()
+    # threading.Thread(target=mlp, args=(data, target)).start()
     return
 
 ####################################################################################
