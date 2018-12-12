@@ -94,13 +94,13 @@ def test(clf, name, data, target, e = 0):
 
 def regression(data, target):
     lst = [(LogisticRegression(multi_class='multinomial', solver='saga', penalty='l1', C=1), ' with l1 strength 1'),
-           (LogisticRegression(multi_class='multinomial', solver='saga', penalty='l1', C=3), ' with l1 strength 3'),
-           (LogisticRegression(multi_class='multinomial', solver='saga', penalty='l1', C=9), ' with l1 strength 9'),
-           (LogisticRegression(multi_class='multinomial', solver='saga', penalty='l1', C=27), ' with l1 strength 27'),
+           (LogisticRegression(multi_class='multinomial', solver='saga', penalty='l1', C=0.1), ' with l1 strength 0.1'),
+           (LogisticRegression(multi_class='multinomial', solver='saga', penalty='l1', C=0.01), ' with l1 strength 0.01'),
+           (LogisticRegression(multi_class='multinomial', solver='saga', penalty='l1', C=0.001), ' with l1 strength 0.001'),
            (LogisticRegression(multi_class='multinomial', solver='saga', penalty='l2', C=1), ' with l2 strength 1'),
-           (LogisticRegression(multi_class='multinomial', solver='saga', penalty='l2', C=3), ' with l2 strength 3'),
-           (LogisticRegression(multi_class='multinomial', solver='saga', penalty='l2', C=9), ' with l2 strength 9'),
-           (LogisticRegression(multi_class='multinomial', solver='saga', penalty='l2', C=27), ' with l2 strength 27')]
+           (LogisticRegression(multi_class='multinomial', solver='saga', penalty='l2', C=0.1), ' with l2 strength 0.1'),
+           (LogisticRegression(multi_class='multinomial', solver='saga', penalty='l2', C=0.01), ' with l2 strength 0.01'),
+           (LogisticRegression(multi_class='multinomial', solver='saga', penalty='l2', C=0.001), ' with l2 strength 0.001')]
     for logreg in lst:
         threading.Thread(target=test, args=(logreg[0], "logreg" + logreg[1], data, target, 0)).start()
     return
