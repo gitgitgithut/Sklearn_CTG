@@ -113,14 +113,14 @@ def decisionTree(data, target):
 
 
 def randomForest(data, target):
-    for e in range(2, 11):
+    for e in [30, 50, 70, 90]:
         rf = RandomForestClassifier(n_estimators=e)
         test(rf, 'rf', data, target, e)
     return
 
 
 def adaBoost(data, target):
-    for e in range(2, 11):
+    for e in [30, 50, 70, 90]:
         ada = AdaBoostClassifier(n_estimators=e)
         test(ada, 'ada', data, target, e)
     return
@@ -147,7 +147,7 @@ def main():
     target = dataset[2:, -1]
     data = dataset[2:, 10:31]
     # data = dimred(dataset[2:size[0]-1, 10:31], target)
-    threading.Thread(target=regression, args=(data, target)).start()
+    # threading.Thread(target=regression, args=(data, target)).start()
     # threading.Thread(target=decisionTree, args=(data, target)).start()
     # threading.Thread(target=randomForest, args=(data, target)).start()
     # threading.Thread(target=adaBoost, args=(data, target)).start()
