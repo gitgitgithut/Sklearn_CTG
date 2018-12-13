@@ -78,7 +78,7 @@ def test(clf, name, data, target, e = 0):
             plt.savefig(name + '/' + pname + '.png')
             plt.clf()
             plt.close(fig)
-#####################################################################
+#######################################################################################
             # score = cross_validate(clf, data, target, cv=k, scoring=scoring)
             # avg_p, avg_r = 0, 0
             # for i in score['test_precision_micro']:
@@ -115,14 +115,14 @@ def decisionTree(data, target):
 def randomForest(data, target):
     for e in [30, 50, 70, 90]:
         rf = RandomForestClassifier(n_estimators=e)
-        test(rf, 'rf', data, target, e)
+        threading.Thread(target=test, args=(rf, 'rf', data, target, e)).start()
     return
 
 
 def adaBoost(data, target):
     for e in [30, 50, 70, 90]:
         ada = AdaBoostClassifier(n_estimators=e)
-        test(ada, 'ada', data, target, e)
+        threading.Thread(target=test, args=(ada, 'ada', data, target, e)).start()
     return
 
 
