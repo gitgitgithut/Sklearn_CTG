@@ -31,6 +31,7 @@ def test(clf, name, data, target, e = 0):
     else:
         fname = name + str(e) + '.csv'
     target = label_binarize(target, classes=[1, 2, 3])
+    # n_classes = target.shape[1]
     clf = OneVsRestClassifier(clf)
     with open(name + '/' + fname, 'w') as file:
         writer = csv.writer(file, delimiter=',')
@@ -40,7 +41,7 @@ def test(clf, name, data, target, e = 0):
             writer.writerow([k, precision_score(target, predict, average='micro'),
                              recall_score(target, predict, average='micro')])
             ##### from https://scikit-learn.org/stable/auto_examples/model_selection/plot_roc.html#######
-            # n_classes = target.shape[1]
+            #
             # fpr = dict()
             # tpr = dict()
             # roc_auc = dict()
@@ -113,11 +114,11 @@ def mlp(data, target):
     #        (MLPClassifier(solver='lbfgs', alpha=0.0001, activation='tanh'), 'mlp,0.0001, tanh'),
     #        (MLPClassifier(solver='lbfgs', alpha=0.001, activation='tanh'), 'mlp, 0,001, tanh'),
     #        (MLPClassifier(solver='lbfgs', alpha=0.01, activation='tanh'), 'mlp, 0.01, tanh')]
-    lst = [(MLPClassifier(solver='lbfgs', alpha=0.001, activation='logistic', hidden_layer_sizes=6), 'mlp, 0,001, logistic, 6 hidden layers'),
-           (MLPClassifier(solver='lbfgs', alpha=0.001, activation='logistic', hidden_layer_sizes=7),'mlp, 0,001, logistic, 7 hidden layers'),
-           (MLPClassifier(solver='lbfgs', alpha=0.001, activation='logistic', hidden_layer_sizes=8), 'mlp, 0,001, logistic, 8 hidden layers'),
-           (MLPClassifier(solver='lbfgs', alpha=0.001, activation='logistic', hidden_layer_sizes=9), 'mlp, 0,001, logistic, 9 hidden layers'),
-           (MLPClassifier(solver='lbfgs', alpha=0.001, activation='logistic', hidden_layer_sizes=10), 'mlp, 0,001, logistic, 10 hidden layers')]
+    lst = [(MLPClassifier(solver='lbfgs', alpha=0.001, activation='logistic', hidden_layer_sizes=1), 'mlp, 0,001, logistic, 1 hidden layers'),
+           (MLPClassifier(solver='lbfgs', alpha=0.001, activation='logistic', hidden_layer_sizes=2), 'mlp, 0,001, logistic, 2 hidden layers'),
+           (MLPClassifier(solver='lbfgs', alpha=0.001, activation='logistic', hidden_layer_sizes=3), 'mlp, 0,001, logistic, 3 hidden layers'),
+           (MLPClassifier(solver='lbfgs', alpha=0.001, activation='logistic', hidden_layer_sizes=4), 'mlp, 0,001, logistic, 4 hidden layers'),
+           (MLPClassifier(solver='lbfgs', alpha=0.001, activation='logistic', hidden_layer_sizes=5), 'mlp, 0,001, logistic, 5 hidden layers')]
     for ann in lst:
         threading.Thread(target=test, args=(ann[0], ann[1], data, target)).start()
     return
